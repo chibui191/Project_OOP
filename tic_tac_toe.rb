@@ -35,12 +35,12 @@ class Game
     puts "---------+-----+---------"
     puts "Hello! Welcome back to Tic-Tac-Toe by Chi Bui!"
     puts "Please input Player X's name:"
-    p1name = gets.chomp.upcase!
+    pXname = gets.chomp.upcase!
     puts "Please input Player O's name:"
-    p2name = gets.chomp.upcase!
+    pOname = gets.chomp.upcase!
     puts "Now, let's get this game started!"
-    @player1 = Player.new(p1name, 'X')
-    @player2 = Player.new(p2name, 'O')   
+    @player1 = Player.new(pXname, 'X')
+    @player2 = Player.new(pOname, 'O')   
   end
 
   def play
