@@ -49,8 +49,7 @@ class Game
     @turn_count = 1
     @winner = ""
     while tie? == false && @winner == ""
-      player = whose_turn
-      go(player)
+      go(whose_turn)
     end
     restart
   end
