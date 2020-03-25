@@ -7,11 +7,11 @@ class GuessBoard
   def display
     puts ""
     @@guess_history.each_with_index do |attempt, i|
-      puts "-----+-----+-----+-----"
-      puts "  #{attempt[0]}  |  #{attempt[1]}  |  #{attempt[2]}  |  #{attempt[3]}  "
-      puts "---(#{@@feedback_history[i][0]})(#{@@feedback_history[i][1]})(#{@@feedback_history[i][2]})(#{@@feedback_history[i][3]})----"
+      puts "+-----+-----+-----+-----+"
+      puts "|  #{attempt[0]}  |  #{attempt[1]}  |  #{attempt[2]}  |  #{attempt[3]}  |"
+      puts "+----(#{@@feedback_history[i][0]})(#{@@feedback_history[i][1]})(#{@@feedback_history[i][2]})(#{@@feedback_history[i][3]})---+"
     end  
-    puts "-----+-----+-----+-----"
+    puts "+-----+-----+-----+-----+"
     puts ""
   end
 
@@ -42,9 +42,9 @@ class Game
     puts "What's your name?"
     @p1name = gets.chomp.upcase!
     puts ""
-    puts "-----+-----+-----+-----"
-    puts "  ?  |  ?  |  ?  |  ?  "
-    puts "-----+-----+-----+-----"
+    puts "+-----+-----+-----+-----+"
+    puts "|  ?  |  ?  |  ?  |  ?  |"
+    puts "+-----+-----+-----+-----+"
     puts ""
     puts "Each ? would be 1 random number within 1-6. Duplicates are allowed."
     puts "Every time you make a guess, we will provide feedback to help you get closer to the Secret Code:"
@@ -62,9 +62,7 @@ class Game
     @current_guess_board = GuessBoard.new
     @attempt_count = 0
     @winner = ""
-    puts "The Secret Code is: #{@current_code.secret_code}" 
     @shiftedBy = rand(3)
-    puts "Feedback shifted by #{@shiftedBy}."
 
     while @attempt_count < 10 && @winner == ""
       @attempt_count += 1
@@ -74,7 +72,6 @@ class Game
       while validated?(input) == false
         puts "Please enter 4 correct numbers between 1-6 only (i.e., 1346):"
         input = gets.chomp
-        validated?(input)
       end
       inputArr = input.split("").to_a
       @current_guess_board.get_guesses << inputArr
@@ -82,11 +79,14 @@ class Game
       @current_guess_board.display
       check_win(inputArr)
     end
-    puts "Oopsie Daisy, you lost this round."
+
+    if @winner == ""
+      puts "Oopsie Daisy, you lost this round."
+    end
     puts "The Secret Code is:" 
-    puts "-----+-----+-----+-----"
-    puts "  #{@current_code.secret_code[0]}  |  #{@current_code.secret_code[1]}  |  #{@current_code.secret_code[2]}  |  #{@current_code.secret_code[3]}  "
-    puts "-----+-----+-----+-----"
+    puts "+-----+-----+-----+-----+"
+    puts "|  #{@current_code.secret_code[0]}  |  #{@current_code.secret_code[1]}  |  #{@current_code.secret_code[2]}  |  #{@current_code.secret_code[3]}  |"
+    puts "+-----+-----+-----+-----+"
   end
 
   def feedback(inputArr)
@@ -111,7 +111,7 @@ class Game
         return false
       end
     end
-    puts "Congratulations #{@p1name}! You've got it right!"
+    puts "Congratulations #{@p1name}! You've got it right in #{@attempt_count} moves!"
     @winner = "#{@p1name}"
     return true
   end
